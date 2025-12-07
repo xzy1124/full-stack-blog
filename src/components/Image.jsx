@@ -10,6 +10,13 @@ const Image = ({src, className, alt, w, h}) => {
             alt={alt} 
             width={w}
             height={h}
+            // 自定义图片的宽高
+            transformation={[
+                {
+                    width: w,
+                    height: h,
+                }
+            ]}
         />
     )
 }
