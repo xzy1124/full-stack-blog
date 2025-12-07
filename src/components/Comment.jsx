@@ -5,7 +5,7 @@ const Comment = () => {
         <div className="p-4 bg-slate-50 rounded-xl mb-8">
             <div className="flex gap-4 items-center">
                 <Image src='userImg.jpeg' className='rounded-full w-12 h-12 object-cover' w='40'/>
-                <Link className='font-medium'>JohnDoe</Link>
+                <Link className='font-medium'>Ziyan</Link>
                 <span className="text-gray-500 text-sm">2 days ago</span>
             </div>
             <div className="mt-4">

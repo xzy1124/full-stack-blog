@@ -16,7 +16,7 @@ const SinglePostPage = () => {
                     </h1>
                     <div className="flex items-center gap-2 text-gray-400 text-sm">
                         <span>Writtern by</span>
-                        <Link className="text-blue-800">John Doe</Link>
+                        <Link className="text-blue-800">Ziyan</Link>
                         <span>on</span>
                         <Link className="text-blue-800">Web Design</Link>
                         <span>2 days ago</span>
@@ -101,7 +101,7 @@ const SinglePostPage = () => {
                                 w='48'
                                 h='48'
                             />
-                            <Link className="text-blue-800">John Doe</Link>
+                            <Link className="text-blue-800">Ziyan</Link>
                         </div>
                         <p className="text-sm text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                         <div className="flex gap-2">
