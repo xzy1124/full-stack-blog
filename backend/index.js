@@ -4,6 +4,8 @@ import commentRouter from './routes/comment.route.js'
 import postRouter from './routes/post.route.js'
 import connectDB from './lib/connectDB.js'
 const app = express()
+// 把客户端发来的 JSON 字符串解析成 JavaScript 对象，然后挂在 req.body 上
+app.use(express.json())
 app.use("/users", userRouter)
 app.use("/comments", commentRouter)
 app.use("/posts", postRouter)

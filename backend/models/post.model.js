@@ -16,7 +16,6 @@ const postSchem = new Schema({
     },
     category: {
         type: String,
-        required: true,
     },
     // slug的作用是文章的url，比如https://blog.com/post/12789012
     // 12789012就是slug
@@ -37,7 +36,7 @@ const postSchem = new Schema({
         default: false
     },
     visit: {
-        type: Boolean,
+        type: Number,
         default: 0
     }
 },
