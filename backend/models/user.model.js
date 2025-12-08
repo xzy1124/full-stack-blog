@@ -2,6 +2,12 @@ import { Schema } from "mongoose"
 import mongoose from "mongoose"
 // 用户的配方，包括用户名、邮箱、头像、保存的帖子ID数组
 const userSchem = new Schema({
+    clerkId: {
+        type: String,
+        required: true,
+        unique: true,
+        sparse: true
+    },
     username: {
         type: String,
         required: true,
@@ -21,6 +27,6 @@ const userSchem = new Schema({
         default: []
     }
 },
-    { timestamps: true }    
+    { timestamps: true }   
 )
 export default mongoose.model("User", userSchem)
