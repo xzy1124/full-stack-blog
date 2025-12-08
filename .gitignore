@@ -1,0 +1,26 @@
+# 前端相关
+client/node_modules/
+client/.next/
+client/.env.local
+client/.env.development.local
+client/.env.test.local
+client/.env.production.local
+client/npm-debug.log*
+client/yarn-debug.log*
+client/yarn-error.log*
+
+# 后端相关
+backend/node_modules/
+backend/.env
+backend/logs/
+backend/build/
+backend/npm-debug.log*
+backend/yarn-debug.log*
+backend/yarn-error.log*
+
+# 通用忽略
+.DS_Store
+Thumbs.db
+*.sw?
+*.bak
+*.tmp
