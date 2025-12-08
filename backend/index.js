@@ -10,6 +10,15 @@ app.use("/users", userRouter)
 app.use("/comments", commentRouter)
 app.use("/posts", postRouter)
 
+// 处理错误,统一兜底
+app.use((error, req, res, next) => {
+    res.status(error.status || 500)
+    res.json({
+        message: error.message || "Something went wrong!",
+        status: error.status,
+        stack: error.stack,
+    })
+})
 app.listen(3000,() => {
     connectDB()
     console.log("Server is running!")
