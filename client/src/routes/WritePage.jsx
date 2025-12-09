@@ -33,6 +33,8 @@ const WritePage = () => {
     const {isLoaded, isSignedIn} = useUser()
     const navigate = useNavigate()
     const [value, setValue] = useState('')
+    const [cover, setCover] = useState('')
+    const [progress, setProgress] = useState(0)
     const {getToken} = useAuth()
     const createPost = useMutation({
         mutationFn: async (newPost) => {
@@ -70,7 +72,11 @@ const WritePage = () => {
     const onSuccess = (response) => {
         console.log('Upload success:', response);
         toast.success('Upload successful!');
+        setCover(response)
     };
+    const onProgress = (progress) => {
+        setProgress(Math.round((progress.loaded / progress.total) * 100))
+    }
     if(!isLoaded){
         return <div className=''>Loading...</div>
     }
@@ -94,7 +100,8 @@ const WritePage = () => {
                     <IKUpload 
                         useUniqueFileName
                         onError={onError}  
-                        onSuccess={onSuccess}  
+                        onSuccess={onSuccess}
+                        onUploadProgress={onProgress}  
                     />
                 </IKContext>
                 <input 
@@ -128,11 +135,13 @@ const WritePage = () => {
                     />
                 </div>
                 <button 
-                    disabled={createPost.isPending}
+                    disabled={createPost.isPending || (0 >= progress && progress < 100)}
                     className='bg-blue-800 text-white rounded-xl w-36 p-2 mt-4 font-medium disabled:bg-blue-400 disabled:cursor-not-allowed'
                 >
                     {createPost.isPending ? '...Loading' : 'Send'}
                 </button>
+                {"progress: " + progress + "%"}
+                {createPost.isError && <span>{createPost.error.message}</span>}
             </form>
         </div>
     )
