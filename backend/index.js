@@ -6,6 +6,7 @@ import connectDB from './lib/connectDB.js'
 import webhookRouter from './routes/webhook.route.js'
 import {clerkMiddleware} from '@clerk/express'
 import cors from 'cors'
+import ImageKit from 'imagekit'; // 官方同样支持 Node-ESM
 const app = express()
 app.use(cors(process.env.VCLERK_URL))
 // Clerk 中间件初始化，作用是在每个请求中添加 req.auth 对象，
@@ -18,6 +19,13 @@ app.use("/webhooks", webhookRouter)
 // 把客户端发来的 JSON 字符串解析成 JavaScript 对象，然后挂在 req.body 上
 app.use(express.json())
 
+// allow cross-origin requests
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 // app.get("/auth-state", (req, res) => {
 //     const authState = req.auth()
 //     res.json(authState)
