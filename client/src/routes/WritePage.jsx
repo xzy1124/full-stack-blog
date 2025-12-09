@@ -4,9 +4,12 @@ import ReactQuill from 'react-quill-new'
 import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
 import {useState} from 'react'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 const WritePage = () => {
     // 能否书写文章肯定要先判断是否登录状态的
     const {isLoaded, isSignedIn} = useUser()
+    const navigate = useNavigate()
     const [value, setValue] = useState('')
     const {getToken} = useAuth()
     const createPost = useMutation({
@@ -18,6 +21,10 @@ const WritePage = () => {
                     Authorization: `Bearer ${token}`
                 }
             })
+        },
+        onSuccess: (res) => {
+            toast.success('Post created successfully')
+            navigate(`/${res.data.slug}`)
         }
     })
     const handleSumbit = e => {
@@ -69,7 +76,12 @@ const WritePage = () => {
                     value={value}
                     onChange={setValue}
                 />
-                <button className='bg-blue-800 text-white rounded-xl w-36 p-2 mt-4 font-medium'>Send</button>
+                <button 
+                    disabled={createPost.isPending}
+                    className='bg-blue-800 text-white rounded-xl w-36 p-2 mt-4 font-medium disabled:bg-blue-400 disabled:cursor-not-allowed'
+                >
+                    {createPost.isPending ? '...Loading' : 'Send'}
+                </button>
             </form>
         </div>
     )

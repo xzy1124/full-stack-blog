@@ -18,7 +18,7 @@ import {
   QueryClientProvider,
   useQuery,
 } from '@tanstack/react-query'
-
+import { ToastContainer } from 'react-toastify';
 const queryClient = new QueryClient()
 // Import your Publishable Key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
@@ -62,6 +62,7 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
       <QueryClientProvider client={queryClient}>
+        <ToastContainer position='bottom-right'/>
         <RouterProvider router={router} />
       </QueryClientProvider>
     </ClerkProvider>
