@@ -7,10 +7,10 @@ const PostListItem = ({post}) => {
         <div className="flex flex-col xl:flex-row gap-8 mb-8">
             {/* Image */}
             {post.img && (<div className="md:hidden xl:block xl:w-1/3">
-                 <Image
+                <Image
                     src={post.img}
-                    className='rounded-3xl object-cover' 
-                    w='735'
+                    className="rounded-3xl object-cover"
+                    w="735"
                 />
             </div>)}
             {/* details:title、data、description */}
