@@ -2,8 +2,19 @@ import Post from "../models/post.model.js"
 import User from "../models/user.model.js"
 import ImageKit from 'imagekit';
 export const getPosts = async (req, res) => {
+    // req.query就是url中?后面的参数，req他就是有这个能力，它的query属性能够获取到所有的参数
+    const page = parseInt(req.query.page) || 1
+    const limit = parseInt(req.query.limit) || 2
+
     const posts = await Post.find()
-    res.status(200).json(posts)
+        .populate("user", "username")
+        .limit(limit)
+        .skip((page - 1) * limit)
+    // console.log('>>> populate 结果', posts)  
+    const totalPosts = await Post.countDocuments()
+    const hasMore = page * limit < totalPosts
+
+    res.status(200).json({posts, hasMore})
 }
 export const getPost = async (req, res) => {
     const post = await Post.findOne({slug: req.params.slug})
