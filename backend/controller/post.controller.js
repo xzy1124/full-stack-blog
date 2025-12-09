@@ -21,8 +21,18 @@ export const createPost = async (req, res) => {
     if (!user) {
         return res.status(404).json("User not found")
     }
+    // 因为我们还缺少一个slug，这个不应该由用户编写，应该由后端来生成
+    let slug = req.body.title.replace(/ /g, '-').toLowerCase()
+    // 检查slug是否已经存在了
+    let postCount = await Post.findOne({slug})
+    let counter = 2
+    while(postCount){
+        slug = `${slug}-${counter}`
+        postCount = await Post.findOne({slug})
+        counter++
+    }
     // 展开运算符写在后面和前面不一样
-    const post = new Post({userId: user._id, ...req.body})
+    const post = new Post({user: user._id, slug, ...req.body})
     await post.save()
     res.status(200).json(post)
 }
@@ -37,7 +47,7 @@ export const deletePost = async (req, res) => {
         return res.status(404).json("User not found")
     }
     // 删除是通过文章id来删除的。只有用户自己的文章才能删除。
-    const post = await Post.findByIdAndDelete({_id: req.params.id, userId: user._id})
+    const post = await Post.findByIdAndDelete({_id: req.params.id, user: user._id})
     // 判断一下有自己的帖子才能删除,要是没找到那就说明没有权限删除
     if(!post){
         return res.status(403).json("You can only delete your own posts")

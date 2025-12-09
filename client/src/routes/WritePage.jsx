@@ -29,9 +29,10 @@ const WritePage = () => {
             desc: formData.get('desc'),
             content: value
         }
-        console.log(data)
+       
         // 调用createPost.mutate方法触发mutationFn, 并传递data作为参数,也就是那里的newPost
         createPost.mutate(data)
+        console.log(data)
     }
     if(!isLoaded){
         return <div className=''>Loading...</div>
