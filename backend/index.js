@@ -5,7 +5,9 @@ import postRouter from './routes/post.route.js'
 import connectDB from './lib/connectDB.js'
 import webhookRouter from './routes/webhook.route.js'
 import {clerkMiddleware} from '@clerk/express'
+import cors from 'cors'
 const app = express()
+app.use(cors(process.env.VCLERK_URL))
 // Clerk 中间件初始化，作用是在每个请求中添加 req.auth 对象，
 // 该对象包含了当前请求的认证状态，如用户 ID、角色等。
 app.use(clerkMiddleware())

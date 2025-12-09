@@ -16,6 +16,7 @@ const postSchem = new Schema({
     },
     category: {
         type: String,
+        default: "general"
     },
     // slug的作用是文章的url，比如https://blog.com/post/12789012
     // 12789012就是slug
