@@ -12,6 +12,7 @@ export const getPost = async (req, res) => {
 export const createPost = async (req, res) => {
     // 新增文章时，需要关联用户,从clerk那里拿到用户id
     const clerkId = req.auth().userId
+    // console.log(req.headers)
     if (!clerkId) {
         return res.status(401).json("Not authenticated")
     }
@@ -37,5 +38,9 @@ export const deletePost = async (req, res) => {
     }
     // 删除是通过文章id来删除的。只有用户自己的文章才能删除。
     const post = await Post.findByIdAndDelete({_id: req.params.id, userId: user._id})
+    // 判断一下有自己的帖子才能删除,要是没找到那就说明没有权限删除
+    if(!post){
+        return res.status(403).json("You can only delete your own posts")
+    }
     res.status(200).json("Post deleted successfully")
 }
