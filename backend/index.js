@@ -4,12 +4,36 @@ import commentRouter from './routes/comment.route.js'
 import postRouter from './routes/post.route.js'
 import connectDB from './lib/connectDB.js'
 import webhookRouter from './routes/webhook.route.js'
+import {clerkMiddleware} from '@clerk/express'
 const app = express()
-// Register webhook routes before the JSON body parser so route-level raw body
-// middleware can access the original request body for signature verification.
+// Clerk 中间件初始化，作用是在每个请求中添加 req.auth 对象，
+// 该对象包含了当前请求的认证状态，如用户 ID、角色等。
+app.use(clerkMiddleware())
+// 为什么要在 webhook 路由之前挂载 JSON 解析中间件？
+// 因为 webhook 路由需要访问原始请求体，而 JSON 解析中间件会将请求体解析为 JavaScript 对象，
+// 并将其挂载在 req.body 上，方便后续路由处理。
 app.use("/webhooks", webhookRouter)
 // 把客户端发来的 JSON 字符串解析成 JavaScript 对象，然后挂在 req.body 上
 app.use(express.json())
+
+// app.get("/auth-state", (req, res) => {
+//     const authState = req.auth()
+//     res.json(authState)
+// })
+
+// app.get("/protect", (req, res) => {
+//     const {userId} = req.auth()
+//     if(!userId) {
+//         return res.status(401).json({message: "未认证"})
+//     }
+//     res.status(200).json({message: "认证成功"})
+// })
+
+// app.get("/protect2", requireAuth(), (req, res) => {
+//     res.status(200).json({ message: "认证成功" })
+// })
+
+// 挂载路由
 app.use("/users", userRouter)
 app.use("/comments", commentRouter)
 app.use("/posts", postRouter)
