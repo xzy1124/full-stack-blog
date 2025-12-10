@@ -1,6 +1,5 @@
 import express from 'express';
 const router = express.Router()
-router.get("/anthortest", (req, res) => {
-    res.status(200).send("Author Test")
-})
+router.get('/saved', getUserSavedPosts)
+router.patch('/save', savePost)
 export default router
