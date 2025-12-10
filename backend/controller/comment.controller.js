@@ -29,26 +29,29 @@ export const addComments = async (req, res) => {
     }
 }
 export const deleteComments = async (req, res) => {
-    const clerkUserId = req.auth.userId
-    // 从请求参数中获取评论ID
-    const id = req.params.id
+    try {
+        const clerkUserId = req.auth().userId
+        const id = req.params.id
+        if (!clerkUserId) return res.status(401).json({ message: "未登录" })
 
-    if (!clerkUserId) {
-        return res.status(401).json({ message: "未登录" })
+        const role = req.auth().sessionClaims?.metadata?.role || "user"
+        if (role === "admin") {
+            await Comment.findByIdAndDelete(id)
+            return res.status(200).json("Comment deleted successfully")
+        }
+
+        const user = await User.findOne({ clerkId: clerkUserId })
+        if (!user) return res.status(404).json({ message: "User not found" })
+
+        const deletedComment = await Comment.findOneAndDelete({
+            _id: id,
+            user: user._id
+        })
+        if (!deletedComment) return res.status(404).json('You can only delete your own comments')
+
+        res.status(200).json('Comment deleted!')
+    } catch (err) {
+        console.error('>>> 删除异常', err) // 关键打印
+        res.status(500).json({ message: err.message })
     }
-    // 检查用户是否是管理员
-    const role = req.auth().sessionClaims?.metadata?.role || "user"
-    if(role === "admin"){
-        await Comment.findByIdAndDelete(req.params.id)
-        return res.status(200).json("Comment deleted successfully")
-    }
-    const user = await User.findOne({ clerkUserId })
-    const deletedComment = await Comment.findOneAndDelete({
-        _id: id,
-        user: user._id
-    })
-    if(!deletedComment){
-        return res.status(404).json('You can only delete your own comments')
-    }
-    res.status(200).json('Comment deleted!')
 }
