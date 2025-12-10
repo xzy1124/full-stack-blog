@@ -44,9 +44,11 @@ const SinglePostPage = () => {
                         {data.data.desc}
                     </p>
                 </div>
-                {data.data.img && (<div className="hidden lg:block w-2/5">
-                    <Image
-                        src={data.data.user.img}
+                {data.data.user.img && (<div className="hidden lg:block w-2/5">
+                    <IKImage
+                        urlEndpoint={import.meta.env.VITE_IK_URL_ENDPOINT}
+                        // src当 src 以 http 开头时，IKImage 会直接透传，不再拼接自己的域名，也就不会 404。
+                        src={data.data.user.img} // 完整公网 URL
                         className='rounded-2xl object-cover' 
                         w='600'
                     />
@@ -152,7 +154,7 @@ const SinglePostPage = () => {
                  </div>
             </div>
             {/* Comment */}
-            <Comments />
+            <Comments postId={data.data._id} />
         </div>
     )
 }

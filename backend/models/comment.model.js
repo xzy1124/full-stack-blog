@@ -4,7 +4,7 @@ import mongoose from "mongoose"
 const commentSchem = new Schema({
     user: {
         type: Schema.Types.ObjectId,
-        ref: "user",
+        ref: "User",
         required: true
     },
     post: {
@@ -18,8 +18,9 @@ const commentSchem = new Schema({
     },
     email: {
         type: String,
-        required: true,
-        unique: true
+        // 这两个不要必须字段
+        // required: true,
+        // unique: true
     },
     img: {
         type: String,
