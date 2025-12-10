@@ -1,9 +1,29 @@
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import Image from "../components/Image"
+import {IKImage} from 'imagekitio-react'
 import PostMenuActions from "../components/PostMenuActions"
 import Search from "../components/Search"
 import Comments from "../components/Comments"
+import axios from 'axios'
+import { useQuery } from "@tanstack/react-query"   
+import {format} from 'timeago.js'
+const fetchPost = async (slug) => {
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/posts/${slug}`)
+    return res
+}
 const SinglePostPage = () => {
+
+    const {slug} = useParams()
+    const {isPending, error, data} = useQuery({
+        // 用来缓存/失效/重新获取这组数据。
+        // 只要 key 变，RQ 就认为“这是另一份数据”，会重新发请求。
+        queryKey: ['post', slug],
+        queryFn: () => fetchPost(slug)
+    })
+    // console.log('看看data', data)
+    if(isPending) return "loading..."
+    if(error) return "some error"+error.message
+    if(!data?.data) return "Post not found"
     return (
         <div className="flex flex-col gap-8">
             {/* details */}
@@ -11,30 +31,26 @@ const SinglePostPage = () => {
                 {/* title、data、description */}
                 <div className="lg:w-3/5 flex flex-col gap-8">
                     <h1 className="text-xl md:text-3xl xl:text-4xl 2xl:text-5xl font-semibold">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                        Ullam modi eum aut.
+                        {data.data.title}
                     </h1>
                     <div className="flex items-center gap-2 text-gray-400 text-sm">
                         <span>Writtern by</span>
-                        <Link className="text-blue-800">Ziyan</Link>
+                        <Link className="text-blue-800">{data.data.user.username}</Link>
                         <span>on</span>
-                        <Link className="text-blue-800">Web Design</Link>
-                        <span>2 days ago</span>
+                        <Link className="text-blue-800">{data.category}</Link>
+                        <span>{format(data.data.createdAt)}</span>
                     </div>
                     <p className="text-gray-500 font-medium">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Eligendi reprehenderit hic consequatur ad rem, accusamus doloribus
-                        aspernatur dolorem facilis ut quam minus ex illo accusantium
-                        laudantium dolorum, quisquam sequi at.
+                        {data.data.desc}
                     </p>
                 </div>
-                <div className="hidden lg:block w-2/5">
+                {data.data.img && (<div className="hidden lg:block w-2/5">
                     <Image
-                        src='postImg.jpeg'
+                        src={data.data.user.img}
                         className='rounded-2xl object-cover' 
                         w='600'
                     />
-                </div>
+                </div>)}
             </div>
             {/* content */}
             <div className="flex flex-col md:flex-row gap-12">
@@ -95,13 +111,18 @@ const SinglePostPage = () => {
                     <h1 className="mb-4 text-sm font-medium">Author</h1>
                     <div className="flex flex-col gap-4">
                         <div className="flex items-center gap-8">
-                            <Image
-                                src='userImg.jpeg'
-                                className='w-12 h-12 rounded-full object-cover'
-                                w='48'
-                                h='48'
-                            />
-                            <Link className="text-blue-800">Ziyan</Link>
+                            {data.data.user.img && (
+                                <IKImage
+                                    urlEndpoint={import.meta.env.VITE_IK_URL_ENDPOINT}
+                                    // src当 src 以 http 开头时，IKImage 会直接透传，不再拼接自己的域名，也就不会 404。
+                                    src={data.data.user.img} // 完整公网 URL
+                                    className="w-12 h-12 rounded-full object-cover"
+                                    width={48}
+                                    height={48}
+                                    loading="lazy"
+                                />
+                            )}
+                            <Link className="text-blue-800">{data.data.user.username}</Link>
                         </div>
                         <p className="text-sm text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                         <div className="flex gap-2">

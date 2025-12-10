@@ -17,7 +17,7 @@ export const getPosts = async (req, res) => {
     res.status(200).json({posts, hasMore})
 }
 export const getPost = async (req, res) => {
-    const post = await Post.findOne({slug: req.params.slug})
+    const post = await Post.findOne({slug: req.params.slug}).populate("user", "username img")
     res.status(200).json(post)
 }
 // 新增文章和删除文章肯定是需要关联用户的，所以我们才需要认证

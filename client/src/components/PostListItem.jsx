@@ -1,8 +1,11 @@
 import Image from "./Image"
 import {Link} from 'react-router-dom'
 import {format} from 'timeago.js'
+
 const PostListItem = ({post}) => {
     // console.log(post.img)
+
+
     return (
         <div className="flex flex-col xl:flex-row gap-8 mb-8">
             {/* Image */}
@@ -15,7 +18,7 @@ const PostListItem = ({post}) => {
             </div>)}
             {/* details:title、data、description */}
             <div className="flex flex-col gap-4 xl:w-2/3">
-                <Link to='/text' className="text-4xl font-semibold">
+                <Link to={`/${post.slug}`} className="text-4xl font-semibold">
                     {post.title}
                 </Link>
                 <div className="flex items-center gap-2 text-gray-400 text-sm">
