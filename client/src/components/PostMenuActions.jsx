@@ -86,7 +86,36 @@ const PostMenuActions = ({post}) => {
         }
         savedMutatioon.mutate()
     }
-    console.log('>>> savedPosts 原始结构', savedPosts)
+
+    const featuredMutatioon = useMutation({
+        mutationFn: async () => {
+            const token = await getToken()
+            return await axios.patch(`${import.meta.env.VITE_API_URL}/posts/feature`, {
+                postId: post._id,
+            },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+        },
+        onSuccess: () => {
+            // 这里的作用是告诉Query,savedPosts这个数据现在已经过期了
+            // 之后如果有组件使用这个数据，Query会自动重新发起请求
+            queryClient.invalidateQueries({ queryKey: ['post', post.slug] })
+            // queryClient.refetchQueries({ 
+            //     queryKey: ['savedPosts'],
+            //     exact: true  // 只精确匹配这个 key
+            // })
+        },
+        onError: (error) => {
+            toast.error(error.response.data.message || "save failed")
+        }
+    })
+    const handleFeatured = () => {
+        featuredMutatioon.mutate()
+    }
+    // console.log('>>> savedPosts 原始结构', savedPosts)
     return (
         <div className="">
             <h1 className="mt-8 mb-4 text-sm font-medium">Actions</h1>
@@ -120,7 +149,35 @@ const PostMenuActions = ({post}) => {
                     <span>Save this Post</span>
                     {savedMutatioon.isPending && <span className="text-sm">(in progress)</span>}
                 </div>
-            )}
+            )}{
+                isAdmin && (
+                    <div className="flex items-center gap-2 py-2 text-sm cursor-pointer" onClick={handleFeatured} >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 48 48"
+                            width='20px'
+                            height='20px'
+                        >
+                            <path
+                                d='M24 2L29.39 16.26L44 18.18L33 29.24L35.82 44L24 37L12.18 44L15 29.24L4 18.18L18.61 16.26L24 2Z'
+                                stroke='black'
+                                strokeWidth='2'
+                                fill={
+                                    featuredMutatioon.isPending
+                                        ? post.isFeatured
+                                            ? "none"
+                                            : "black"
+                                        : post.isFeatured
+                                            ? "black"
+                                            : "none"
+                                }
+                            />
+                        </svg>
+                        <span>Feature this post</span>
+                        {featuredMutatioon.isPending && <span className="text-sm">(in progress)</span>}
+                    </div>
+                )
+            }
         
             {user && (post.user.username === user.username || isAdmin) && (
                 <div className="flex items-center gap-2 py-2 text-sm cursor-pointer" onClick={handleDelete}>

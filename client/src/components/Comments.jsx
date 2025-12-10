@@ -53,7 +53,7 @@ const Comments = ({postId}) => {
             <h1 className="text-xl text-gray-500 underline">Comments</h1>
             <form 
                 onSubmit={handleSubmit}
-                className="flex items-center gap-8 justify-between w-full"
+                className="flex items-center gap-8 justify-between w-full mb-12"
             >
                 <textarea 
                     className="rounded-xl p-4 w-full" 

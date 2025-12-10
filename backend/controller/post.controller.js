@@ -73,6 +73,30 @@ export const deletePost = async (req, res) => {
     }
     res.status(200).json("Post deleted successfully")
 }
+export const featurePost = async (req, res) => {
+    const clerkUserId = req.auth().userId
+    const postId = req.body.postId
+    if (!clerkUserId) {
+        return res.status(401).json("Not authenticated")
+    }
+    // 检查用户是否是管理员
+    const role = req.auth().sessionClaims?.metadata?.role || "user"
+    if (role !== "admin") {
+        return res.status(403).json("Only admins can feature posts")
+    }
+    const post = await Post.findById(postId)
+    const isFeatured = post.isFeatured
+
+    const updatedPost = await Post.findByIdAndUpdate(
+        postId,
+        {
+            isFeatured: !isFeatured,
+        },
+        { new: true }
+    )
+    res.status(200).json(updatedPost)
+}
+
 const imagekit = new ImageKit({
     publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
     privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
