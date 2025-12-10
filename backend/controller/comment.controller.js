@@ -36,6 +36,12 @@ export const deleteComments = async (req, res) => {
     if (!clerkUserId) {
         return res.status(401).json({ message: "未登录" })
     }
+    // 检查用户是否是管理员
+    const role = req.auth().sessionClaims?.metadata?.role || "user"
+    if(role === "admin"){
+        await Comment.findByIdAndDelete(req.params.id)
+        return res.status(200).json("Comment deleted successfully")
+    }
     const user = await User.findOne({ clerkUserId })
     const deletedComment = await Comment.findOneAndDelete({
         _id: id,

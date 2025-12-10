@@ -23,13 +23,13 @@ export const getPost = async (req, res) => {
 // 新增文章和删除文章肯定是需要关联用户的，所以我们才需要认证
 export const createPost = async (req, res) => {
     // 新增文章时，需要关联用户,从clerk那里拿到用户id
-    const clerkId = req.auth().userId
+    const clerkUserId = req.auth().userId
     // console.log(req.headers)
-    if (!clerkId) {
+    if (!clerkUserId) {
         return res.status(401).json("Not authenticated")
     }
     // 从用户模型中找到对应的用户
-    const user = await User.findOne({clerkId})
+    const user = await User.findOne({clerkUserId})
     if (!user) {
         return res.status(404).json("User not found")
     }
@@ -49,12 +49,19 @@ export const createPost = async (req, res) => {
     res.status(200).json(post)
 }
 export const deletePost = async (req, res) => {
-    const clerkId = req.auth().userId
-    if (!clerkId) {
+    const clerkUserId = req.auth().userId
+    if (!clerkUserId) {
         return res.status(401).json("Not authenticated")
     }
+    // 检查用户是否是管理员
+    const role = req.auth().sessionClaims?.metadata?.role || "user"
+    if(role === "admin"){
+        await Post.findByIdAndDelete(req.params.id)
+        return res.status(200).json("Post deleted successfully")
+    }
+
     // 从用户模型中找到对应的用户
-    const user = await User.findOne({clerkId})
+    const user = await User.findOne({clerkUserId})
     if (!user) {
         return res.status(404).json("User not found")
     }

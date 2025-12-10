@@ -30,7 +30,7 @@ const Comments = ({postId}) => {
             })
         },
         onSuccess: () => {
-            invalidateQueries
+            queryClient.invalidateQueries({queryKey: ['comments', postId]})
         },
         onError: (err) => {
             toast.error(err.message)
