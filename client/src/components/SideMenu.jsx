@@ -1,5 +1,5 @@
 import Search from "./Search"
-import { Link, useSearchParams } from "react-router-dom"
+import { useSearchParams } from "react-router-dom"
 const SideMenu = () => {
     const [searchParams, setSearchParams] = useSearchParams()
     const handleFilterChange = (e) => {
@@ -8,6 +8,11 @@ const SideMenu = () => {
             setSearchParams({ ...Object.fromEntries(searchParams), sort: filter })
         }
         
+    }
+    const handleCategoryChange = (category) => {
+        if(searchParams.get("category") !== category){
+            setSearchParams({ ...Object.fromEntries(searchParams), cat: category })
+        }
     }
     return (
         <div className="px-4 h-max sticky top-8">
@@ -54,12 +59,12 @@ const SideMenu = () => {
             </div>
             <h1 className="mb-4 mt-8 text-sm font-medium">Categories</h1>
             <div className="flex flex-col gap-2 text-sm">
-                <Link className="underline" to='/posts'>All</Link>
-                <Link className="underline" to='/posts?category=web-design'>Web Design</Link>
-                <Link className="underline" to='/posts?category=development'>Development</Link>
-                <Link className="underline" to='/posts?category=databases'>Databases</Link>
-                <Link className="underline" to='/posts?category=seo'>Search Engines</Link>
-                <Link className="underline" to='/posts?category=marketing'>Marketing</Link>
+                <span className="underline" onClick={() => handleCategoryChange('general')} >All</span>
+                <span className="underline" onClick={() => handleCategoryChange('web-design')} >Web Design</span>
+                <span className="underline" onClick={() => handleCategoryChange('development')} >Development</span>
+                <span className="underline" onClick={() => handleCategoryChange('databases')} >Databases</span>
+                <span className="underline" onClick={() => handleCategoryChange('seo')} >Search Engines</span>
+                <span className="underline" onClick={() => handleCategoryChange('marketing')} >Marketing</span>
             </div>
         </div>
     )
