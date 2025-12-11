@@ -38,7 +38,7 @@ export const getPosts = async (req, res) => {
                 sortObj = {createdAt: 1}
                 break
             case "popular":
-                sortObj = {visit: 1}
+                sortObj = {visit: -1}
                 break
             case "trending":
                 sortObj = {visit: -1}
@@ -74,8 +74,8 @@ export const createPost = async (req, res) => {
     if (!clerkUserId) {
         return res.status(401).json("Not authenticated")
     }
-    console.log('🔑 clerkUserId:', clerkUserId);
-    console.log('📄 请求头 authorization:', req.headers.authorization);
+    // console.log('🔑 clerkUserId:', clerkUserId);
+    // console.log('📄 请求头 authorization:', req.headers.authorization);
     // 从用户模型中找到对应的用户
     const user = await User.findOne({ clerkId: clerkUserId })
     if (!user) {
