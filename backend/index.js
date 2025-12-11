@@ -50,6 +50,7 @@ app.use("/posts", postRouter)
 
 // 处理错误,统一兜底
 app.use((error, req, res, next) => {
+    console.error(error);
     res.status(error.status || 500)
     res.json({
         message: error.message || "Something went wrong!",

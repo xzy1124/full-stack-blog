@@ -56,57 +56,10 @@ const SinglePostPage = () => {
             </div>
             {/* content */}
             <div className="flex flex-col md:flex-row gap-12">
-                <div className="lg:text-lg flex flex-col gap-6 text-justify">
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Eligendi reprehenderit hic consequatur ad rem, accusamus doloribus
-                        aspernatur dolorem facilis ut quam minus ex illo accusantium
-                        laudantium dolorum, quisquam sequi at.Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Eligendi reprehenderit hic consequatur ad rem, accusamus doloribus
-                        aspernatur dolorem facilis ut quam minus ex illo accusantium
-                        laudantium dolorum, quisquam sequi at.
-                    </p>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Eligendi reprehenderit hic consequatur ad rem, accusamus doloribus
-                        aspernatur dolorem facilis ut quam minus ex illo accusantium
-                        laudantium dolorum, quisquam sequi at.Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Eligendi reprehenderit hic consequatur ad rem, accusamus doloribus
-                        aspernatur dolorem facilis ut quam minus ex illo accusantium
-                        laudantium dolorum, quisquam sequi at.Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Eligendi reprehenderit hic consequatur ad rem, accusamus doloribus
-                        aspernatur dolorem facilis ut quam minus ex illo accusantium
-                        laudantium dolorum, quisquam sequi at.
-                    </p>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Eligendi reprehenderit hic consequatur ad rem, accusamus doloribus
-                        aspernatur dolorem facilis ut quam minus ex illo accusantium
-                        laudantium dolorum, quisquam sequi at.Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Eligendi reprehenderit hic consequatur ad rem, accusamus doloribus
-                        aspernatur dolorem facilis ut quam minus ex illo accusantium
-                        laudantium dolorum, quisquam sequi at.Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Eligendi reprehenderit hic consequatur ad rem, accusamus doloribus
-                        aspernatur dolorem facilis ut quam minus ex illo accusantium
-                        laudantium dolorum, quisquam sequi at.
-                    </p>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Eligendi reprehenderit hic consequatur ad rem, accusamus doloribus
-                        aspernatur dolorem facilis ut quam minus ex illo accusantium
-                        laudantium dolorum, quisquam sequi at.Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Eligendi reprehenderit hic consequatur ad rem, accusamus doloribus
-                        aspernatur dolorem facilis ut quam minus ex illo accusantium
-                        laudantium dolorum, quisquam sequi at.Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Eligendi reprehenderit hic consequatur ad rem, accusamus doloribus
-                        aspernatur dolorem facilis ut quam minus ex illo accusantium
-                        laudantium dolorum, quisquam sequi at. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Eligendi reprehenderit hic consequatur ad rem, accusamus doloribus
-                        aspernatur dolorem facilis ut quam minus ex illo accusantium
-                        laudantium dolorum, quisquam sequi at.Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Eligendi reprehenderit hic consequatur ad rem.
-                    </p>                
-                </div>  
+                <div
+                    className="lg:text-lg flex flex-col gap-6 text-justify"
+                    dangerouslySetInnerHTML={{ __html: data.data.content }}
+                />  
                  {/*menu  */}
                  <div className="px-4 h-max sticky top-8">
                     {/* Author */}
