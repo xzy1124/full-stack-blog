@@ -15,8 +15,6 @@ const SinglePostPage = () => {
 
     const {slug} = useParams()
     const {isPending, error, data} = useQuery({
-        // 用来缓存/失效/重新获取这组数据。
-        // 只要 key 变，RQ 就认为“这是另一份数据”，会重新发请求。
         queryKey: ['post', slug],
         queryFn: () => fetchPost(slug)
     })

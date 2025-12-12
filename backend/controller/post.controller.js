@@ -51,6 +51,10 @@ export const getPosts = async (req, res) => {
         } 
     }
 
+    if(featured){
+        query.isFeatured = featured
+    }
+
     const posts = await Post.find(query)
         .populate("user", "username")
         .sort(sortObj)
