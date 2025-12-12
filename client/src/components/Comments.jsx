@@ -46,6 +46,8 @@ const Comments = ({postId}) => {
         }
         console.log('即将mutate', commentData)
         mutation.mutate(commentData)
+        // 提交成功后，清空表单
+        e.target.reset()
     }
     // console.log('看看data', data)
     return (
