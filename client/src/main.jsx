@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ClerkProvider } from '@clerk/clerk-react';
+const publishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 import './index.css'
 import {
   createBrowserRouter,
@@ -20,6 +21,18 @@ import {
   useQuery,
 } from '@tanstack/react-query'
 import { ToastContainer } from 'react-toastify';
+
+// ① 声明允许的来源
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'https://full-stack-blog-vncx.vercel.app/'
+]
+
+if (!allowedOrigins.includes(window.location.origin)) {
+  console.warn('Untrusted origin:', window.location.origin)
+}
+
 const queryClient = new QueryClient()
 // Import your Publishable Key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
@@ -65,11 +78,16 @@ if (!PUBLISHABLE_KEY) {
   ]);
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+    <ClerkProvider
+      publishableKey={PUBLISHABLE_KEY}
+      signInFallbackRedirectUrl="/"
+      signUpFallbackRedirectUrl="/"
+      afterSignOutUrl="/"
+    >
       <QueryClientProvider client={queryClient}>
-        <ToastContainer position='bottom-right'/>
+        <ToastContainer position="bottom-right" />
         <RouterProvider router={router} />
       </QueryClientProvider>
     </ClerkProvider>
-  </StrictMode>,
+  </StrictMode>
 )

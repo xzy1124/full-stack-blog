@@ -10,9 +10,15 @@ import ImageKit from 'imagekit'; // 官方同样支持 Node-ESM
 const app = express()
 // app.use(cors(process.env.VCLERK_URL))
 // 修改为：
+const ALLOWED_ORIGINS = [
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'https://full-stack-blog-ashen.vercel.app/'
+]
+
 app.use(cors({
-    origin: process.env.VCLERK_URL || '*',
-    credentials: true,
+    origin: ALLOWED_ORIGINS,
+    credentials: true
 }))
 
 // Clerk 中间件初始化，作用是在每个请求中添加 req.auth 对象，
