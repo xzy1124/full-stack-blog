@@ -19,9 +19,9 @@ const FeaturedPosts = () => {
     if (error) return "some error" + error.message
     if (!data?.data) return "Post not found"
     const posts = data.data.posts
-    console.log('看看posts', posts)
-    console.log('看看posts[0]', posts[0])
-    console.log('看看posts[1]', posts[1])
+    // console.log('看看posts', posts)
+    // console.log('看看posts[0]', posts[0])
+    // console.log('看看posts[1]', posts[1])
     if(!posts || posts.length === 0){
         return
     }

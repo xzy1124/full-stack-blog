@@ -43,10 +43,10 @@ const SinglePostPage = () => {
                     </p>
                 </div>
                 {data.data.user.img && (<div className="hidden lg:block w-2/5">
-                    <IKImage
-                        urlEndpoint={import.meta.env.VITE_IK_URL_ENDPOINT}
+                    <Image
+                        // urlEndpoint={import.meta.env.VITE_IK_URL_ENDPOINT}
                         // src当 src 以 http 开头时，IKImage 会直接透传，不再拼接自己的域名，也就不会 404。
-                        src={data.data.user.img} // 完整公网 URL
+                        src={data.data.img} // 完整公网 URL
                         className='rounded-2xl object-cover' 
                         w='600'
                     />
