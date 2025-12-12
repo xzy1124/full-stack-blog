@@ -13,6 +13,7 @@ import LoginPage from './routes/LoginPage.jsx';
 import RegisterPage from './routes/RegisterPage.jsx';
 import SinglePostPage from './routes/SinglePostPage.jsx';
 import MainLayout from './layouts/MainLayout.jsx';
+import About from './routes/About.jsx';
 import {
   QueryClient,
   QueryClientProvider,
@@ -54,6 +55,10 @@ if (!PUBLISHABLE_KEY) {
         {
           path: '/register',
           element: <RegisterPage />
+        },
+        {
+          path: '/about',
+          element: <About />
         },
       ]
     }
