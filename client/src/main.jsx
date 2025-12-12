@@ -26,7 +26,7 @@ import { ToastContainer } from 'react-toastify';
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
-  'https://full-stack-blog-vncx.vercel.app/'
+  'https://full-stack-blog-vncx.vercel.app'
 ]
 
 if (!allowedOrigins.includes(window.location.origin)) {
