@@ -8,7 +8,13 @@ import {clerkMiddleware} from '@clerk/express'
 import cors from 'cors'
 import ImageKit from 'imagekit'; // 官方同样支持 Node-ESM
 const app = express()
-app.use(cors(process.env.VCLERK_URL))
+// app.use(cors(process.env.VCLERK_URL))
+// 修改为：
+app.use(cors({
+    origin: process.env.VCLERK_URL || '*',
+    credentials: true,
+}))
+
 // Clerk 中间件初始化，作用是在每个请求中添加 req.auth 对象，
 // 该对象包含了当前请求的认证状态，如用户 ID、角色等。
 app.use(clerkMiddleware())
