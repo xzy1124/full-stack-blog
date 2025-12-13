@@ -80,6 +80,8 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ClerkProvider
       publishableKey={PUBLISHABLE_KEY}
+      signInUrl="https://full-stack-blog-vncx.vercel.app/login"
+      signUpUrl="https://full-stack-blog-vncx.vercel.app/register"
       signInFallbackRedirectUrl="https://full-stack-blog-vncx.vercel.app"
       signUpFallbackRedirectUrl="https://full-stack-blog-vncx.vercel.app"
       afterSignOutUrl="https://full-stack-blog-vncx.vercel.app"
