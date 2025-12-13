@@ -80,9 +80,9 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ClerkProvider
       publishableKey={PUBLISHABLE_KEY}
-      signInFallbackRedirectUrl="/"
-      signUpFallbackRedirectUrl="/"
-      afterSignOutUrl="/"
+      signInFallbackRedirectUrl="https://full-stack-blog-vncx.vercel.app"
+      signUpFallbackRedirectUrl="https://full-stack-blog-vncx.vercel.app"
+      afterSignOutUrl="https://full-stack-blog-vncx.vercel.app"
     >
       <QueryClientProvider client={queryClient}>
         <ToastContainer position="bottom-right" />
