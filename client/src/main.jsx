@@ -15,6 +15,7 @@ import RegisterPage from './routes/RegisterPage.jsx';
 import SinglePostPage from './routes/SinglePostPage.jsx';
 import MainLayout from './layouts/MainLayout.jsx';
 import About from './routes/About.jsx';
+import SsoCallback from './routes/sso-callback.jsx'
 import {
   QueryClient,
   QueryClientProvider,
@@ -73,6 +74,10 @@ if (!PUBLISHABLE_KEY) {
           path: '/about',
           element: <About />
         },
+        {
+          path: '/sso-callback',
+          element: <SsoCallback />
+        }
       ]
     }
   ]);
