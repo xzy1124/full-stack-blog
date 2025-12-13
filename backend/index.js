@@ -70,10 +70,7 @@ app.use((error, req, res, next) => {
         stack: error.stack,
     })
 })
-// 把 listen 包进 async 函数
-(async () => {
-    await connectDB()          // 等待连完
-    app.listen(3000, () => {
-        console.log('Server is running!')
-    })
-})()
+app.listen(3000,() => {
+    connectDB()
+    console.log("Server is running!")
+})
